@@ -27,23 +27,22 @@ const Login = () => {
     setWarning('');
     console.log(email, password);
 
-    if (email == '' && password == '') {
+    if (email === '' && password === '') {
       setWarning('Please enter email and password');
-    } else if (email == '') {
+    } else if (email === '') {
       setWarning('Please enter email');
-    } else if (password == '') {
+    } else if (password === '') {
       setWarning('Please enter Password');
     } else {
       const { data, error } = await authenticate({ email, password }, setError);
-      // auth.verify();
       if (data) {
         window.location.href = '/';
-      }
-      if (error.status == 404) {
+      } else if (error?.status === 404) {
         setError('Credentials not found');
-      }
-      if (error.status == 401) {
+      } else if (error?.status === 401) {
         setError('Invalid Credentials');
+      } else {
+        setError('Something went wrong');
       }
     }
   };
